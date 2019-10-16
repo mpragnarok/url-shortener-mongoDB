@@ -2,6 +2,12 @@ const mongoose = require('mongoose')
 
 // Create Url schema
 const urlSchema = new mongoose.Schema({
+  urlCode: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true
+  },
   originalUrl: {
     type: String,
     unique: true,

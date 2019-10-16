@@ -7,26 +7,25 @@ const hbs = exphbs.create({
   extname: '.hbs',
   defaultLayout: 'main'
 })
+const bodyParser = require('body-parser')
 // require controllers
 const shortenController = require('../controllers/shorten')
 const homeController = require('../controllers/home')
-
-// check if not in production mode
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 // setup handlebars engine and file extension
 app.engine(hbs.extname, hbs.engine, hbs.defaultLayout)
 app.set('view engine', hbs.extname)
 
+// import body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // static files
 app.use(express.static("public"))
 
 // controllers
-app.use('/', homeController)
-// app.use('/shorten', shorten)
-// app.use('/:shortenedUrl', shorten)
+app.get('/', homeController)
+app.post('/shorten', shortenController.shortenURL)
+app.get('/:urlId', shortenController.originalURL)
 
 // set up listening on Express server
 app.listen(port, () => {
