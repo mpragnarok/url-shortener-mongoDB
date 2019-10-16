@@ -6,7 +6,8 @@ module.exports = {
   shortenURL: async (req, res) => {
     const { inputUrl } = req.body
     const urlCode = shortid.generate()
-    const baseUrl = process.env.MONGODB_URI || "http://localhost:3000"
+    const baseUrl = process.env.NODE_ENV ? "https://url-shortener-min.herokuapp.com/" : "http://localhost:3000"
+
     try {
       let errors = []
 
